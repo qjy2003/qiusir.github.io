@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="../velocity.min.js"></script> -->
+    <script src="vue.js"></script>
+    <script src="../velocity.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="show=!show">动画效果</button>
+        <transition @before-enter="beforEnter" @enter="enter" @leave="leave" :css="false">
+            <p v-if="show">文字动画效果</p>
+        </transition>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+    el:'#app',
+    data:{
+        show:false
+    },
+    methods:{
+        beforEnter(el){
+            el.style.opacity = 0
+            el.style.transformOrigin ='left'
+            el.style.color ='red'
+        },
+        enter(el, done){
+            Velocity(el,{opacity: 1,fontSize:'1.4em'},{duration: 300})
+            Velocity(el,{fontSize: 'lem'},{complete: done})
+        },
+        leave(el, done){
+            Velocity(el,{translatex:'15px',rotatez:'50deg'},{duration: 3000})
+            Velocity(el,{rotatez:'100deg'},{loop:2})
+            Velocity(el,{rotatez:'45deg',translateY: '30px',translatex:'30px',opacity: 0},{complete: done})
+        }
+    }
+})
+</script>
+</html>
